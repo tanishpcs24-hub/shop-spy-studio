@@ -14,7 +14,83 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      price_history: {
+        Row: {
+          id: string
+          in_stock: boolean | null
+          price: number | null
+          product_id: string
+          recorded_at: string
+        }
+        Insert: {
+          id?: string
+          in_stock?: boolean | null
+          price?: number | null
+          product_id: string
+          recorded_at?: string
+        }
+        Update: {
+          id?: string
+          in_stock?: boolean | null
+          price?: number | null
+          product_id?: string
+          recorded_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "price_history_product_id_fkey"
+            columns: ["product_id"]
+            isOneToOne: false
+            referencedRelation: "products"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      products: {
+        Row: {
+          created_at: string
+          currency: string | null
+          current_price: number | null
+          id: string
+          image_url: string | null
+          in_stock: boolean | null
+          last_checked_at: string | null
+          last_error: string | null
+          previous_price: number | null
+          title: string | null
+          updated_at: string
+          url: string
+        }
+        Insert: {
+          created_at?: string
+          currency?: string | null
+          current_price?: number | null
+          id?: string
+          image_url?: string | null
+          in_stock?: boolean | null
+          last_checked_at?: string | null
+          last_error?: string | null
+          previous_price?: number | null
+          title?: string | null
+          updated_at?: string
+          url: string
+        }
+        Update: {
+          created_at?: string
+          currency?: string | null
+          current_price?: number | null
+          id?: string
+          image_url?: string | null
+          in_stock?: boolean | null
+          last_checked_at?: string | null
+          last_error?: string | null
+          previous_price?: number | null
+          title?: string | null
+          updated_at?: string
+          url?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
