@@ -1,4 +1,5 @@
 import { useEffect, useMemo, useState } from "react";
+import { Link } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -17,8 +18,8 @@ import {
   Tag,
   X,
   ArrowUpDown,
+  LineChart,
 } from "lucide-react";
-import ProductChart from "./ProductChart";
 
 interface Product {
   id: string;
@@ -211,7 +212,6 @@ const Dashboard = () => {
     return { total, inStock, drops, tracked };
   }, [products, allTags]);
 
-  const selectedProduct = products.find((p) => p.id === selected);
   const sortLabels: Record<SortKey, string> = {
     newest: "Newest",
     "price-asc": "Price ↑",
@@ -226,10 +226,15 @@ const Dashboard = () => {
           <div className="size-10 rounded-xl bg-[image:var(--gradient-primary)] flex items-center justify-center shadow-[var(--shadow-glow)]">
             <Activity className="size-5 text-primary-foreground" />
           </div>
-          <div>
+          <div className="flex-1">
             <h1 className="text-xl font-semibold tracking-tight">PriceWatch</h1>
             <p className="text-xs text-muted-foreground">Track e-commerce prices in real time</p>
           </div>
+          <Link to="/charts">
+            <Button variant="secondary" className="gap-2">
+              <LineChart className="size-4" /> View Charts
+            </Button>
+          </Link>
         </div>
       </header>
 
@@ -385,12 +390,16 @@ const Dashboard = () => {
           )}
         </Card>
 
-        <div className="grid lg:grid-cols-[1fr,1.2fr] gap-6">
-          <div className="space-y-3">
+        <div className="space-y-3">
+          <div className="flex items-center justify-between">
             <h2 className="text-sm font-medium text-muted-foreground uppercase tracking-wider">
               Tracked Products ({filteredProducts.length}/{products.length})
             </h2>
-            {filteredProducts.length === 0 ? (
+            <Link to="/charts" className="text-xs text-primary hover:underline flex items-center gap-1">
+              <LineChart className="size-3" /> View all price charts
+            </Link>
+          </div>
+          {filteredProducts.length === 0 ? (
               <Card className="p-12 text-center border-dashed">
                 <Package className="size-10 text-muted-foreground mx-auto mb-3" />
                 <p className="text-muted-foreground">
@@ -506,20 +515,6 @@ const Dashboard = () => {
                 );
               })
             )}
-          </div>
-
-          <div className="space-y-3">
-            <h2 className="text-sm font-medium text-muted-foreground uppercase tracking-wider">
-              Price History
-            </h2>
-            {selectedProduct ? (
-              <ProductChart product={selectedProduct} />
-            ) : (
-              <Card className="p-12 text-center border-dashed h-full flex items-center justify-center">
-                <p className="text-muted-foreground">Select a product to see its price history</p>
-              </Card>
-            )}
-          </div>
         </div>
       </main>
     </div>
