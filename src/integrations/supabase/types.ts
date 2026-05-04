@@ -57,6 +57,7 @@ export type Database = {
           last_checked_at: string | null
           last_error: string | null
           previous_price: number | null
+          tags: string[]
           title: string | null
           updated_at: string
           url: string
@@ -71,6 +72,7 @@ export type Database = {
           last_checked_at?: string | null
           last_error?: string | null
           previous_price?: number | null
+          tags?: string[]
           title?: string | null
           updated_at?: string
           url: string
@@ -85,6 +87,7 @@ export type Database = {
           last_checked_at?: string | null
           last_error?: string | null
           previous_price?: number | null
+          tags?: string[]
           title?: string | null
           updated_at?: string
           url?: string
